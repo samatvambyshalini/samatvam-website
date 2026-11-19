@@ -150,11 +150,11 @@ const SITE = {
 
   prayersIntro: "Each class opens and closes with a short prayer. You are welcome to chant along, or simply listen.",
   prayers: [
-    { tag: "Opening Prayer", title: "Sahana Vavatu",
-      sanskrit: ["ॐ सह नाववतु ।", "सह नौ भुनक्तु ।", "सह वीर्यं करवावहै ।", "तेजस्वि नावधीतमस्तु मा विद्विषावहै ।", "ॐ शान्तिः शान्तिः शान्तिः ॥"],
-      roman: ["Om saha nāvavatu", "saha nau bhunaktu", "saha vīryaṃ karavāvahai", "tejasvi nāvadhītam astu mā vidviṣāvahai", "Om śāntiḥ śāntiḥ śāntiḥ"],
-      meaning: "May we be protected together. May we be nourished together. May we work together with energy and vigor. May our learning be bright and effective, and may we never turn against one another. Om, peace, peace, peace." },
-    { tag: "Closing Prayer", title: "Pūrṇam Adaḥ",
+    { tag: "Opening Prayer",
+      sanskrit: ["ॐ सह नाववतु ।", "सह नौ भुनक्तु ।", "सह वीर्यं करवावहै ।", "तेजस्वि नावधीतमस्तु मा विद्विषावहै ।"],
+      roman: ["Om saha nāvavatu", "saha nau bhunaktu", "saha vīryaṃ karavāvahai", "tejasvi nāvadhītam astu mā vidviṣāvahai"],
+      meaning: "May we be protected together. May we be nourished together. May we work together with energy and vigor. May our learning be bright and effective, and may we never turn against one another." },
+    { tag: "Closing Prayer",
       sanskrit: ["ॐ पूर्णमदः पूर्णमिदं पूर्णात्पूर्णमुदच्यते ।", "पूर्णस्य पूर्णमादाय पूर्णमेवावशिष्यते ॥", "ॐ शान्तिः शान्तिः शान्तिः ॥"],
       roman: ["Om pūrṇam adaḥ pūrṇam idaṃ pūrṇāt pūrṇam udacyate", "pūrṇasya pūrṇam ādāya pūrṇam evāvaśiṣyate", "Om śāntiḥ śāntiḥ śāntiḥ"],
       meaning: "That is whole, this is whole. From the whole, the whole comes forth. Take the whole from the whole, and the whole remains. Om, peace, peace, peace." }
@@ -209,6 +209,22 @@ const SITE = {
   // { text: "I leave every class feeling calmer.", name: "Student name" },
   reviews: [
   ],
+
+  classLength: "60-70 min",
+  // WEEKLY TIMETABLE. Each line is one class.
+  // To add a class: copy a line and change the day, time and mode.
+  // To remove a class: delete its whole line.  Days: Mon Tue Wed Thu Fri Sat Sun.
+  // A day appears as a tab only when it has at least one class.
+  schedule: [
+    { day: "Fri", time: "9:00 AM",  title: "Hatha Yoga", mode: "In person (at home)" },
+    { day: "Fri", time: "5:00 PM",  title: "Hatha Yoga", mode: "In person (at home)" },
+    { day: "Sat", time: "7:00 AM",  title: "Hatha Yoga", mode: "Online" },
+    { day: "Sun", time: "8:00 AM",  title: "Hatha Yoga", mode: "In person (at home)" },
+    { day: "Sun", time: "4:30 PM",  title: "Hatha Yoga", mode: "In person (at home)" }
+  ],
+  // OPTIONAL: to change the timetable from a Google Sheet instead (no GitHub needed),
+  // paste its "published CSV" link here. The sheet needs these headings in row 1: Day, Time, Class, Mode
+  scheduleSheetCsv: "",
 
   videosIntro: "Short videos to practice with at home.",
   // Paste a YouTube link (best: upload as "Unlisted") or a Google Drive video link.
@@ -391,9 +407,6 @@ const SITE = {
                                  alt="Shalini - Yoga & Wellness Guide" 
                                  class="rounded-3xl shadow-xl w-full h-[480px] object-cover"
                                  onerror="this.src='https://placehold.co/600x750/e3ebe3/233223?text=Shalini'">
-                            <div class="absolute bottom-4 right-4 bg-sage-900 text-cream-50 px-4 py-2 rounded-xl text-xs font-serif italic">
-                                "Samatvam Yoga Ucyate" — Bhagavad Gita
-                            </div>
                         </div>
                     </div>
 
@@ -407,6 +420,12 @@ const SITE = {
                         <p class="text-sage-800/80 leading-relaxed font-light text-sm sm:text-base">
                             In Sanskrit, <strong>Samatvam</strong> means a steady, balanced mind, whatever is happening around us. I am simply a medium for sharing what I have learned from my teachers and my own practice. These teachings belong to the ancient tradition of yoga, and I share them with gratitude, hoping they bring you a little more calm and ease.
                         </p>
+
+                        <blockquote class="border-l-4 border-terracotta pl-5 py-1 space-y-1">
+                            <p class="text-2xl text-sage-900" style="font-family:'Noto Serif Devanagari',serif">समत्वं योग उच्यते ॥</p>
+                            <p class="text-sm italic text-sage-700">Samatvaṁ yoga ucyate</p>
+                            <p class="text-sm text-sage-800 font-light">&ldquo;Evenness of mind is called yoga.&rdquo; <span class="text-sage-600">Bhagavad Gita 2.48</span></p>
+                        </blockquote>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                             <div class="p-5 rounded-2xl bg-cream-50 border border-sage-200/80 space-y-2">
@@ -551,17 +570,13 @@ const SITE = {
                 </div>
 
                 <!-- Day Selector Tabs -->
-                <div class="flex flex-wrap gap-2 border-b border-sage-800 pb-4 mb-8" id="dayTabs">
-                    <button onclick="switchScheduleDay('Fri')" class="day-tab px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition bg-sage-700 text-cream-50" data-day="Fri">Fri</button>
-                    <button onclick="switchScheduleDay('Sat')" class="day-tab px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition bg-sage-900 text-sage-400 hover:text-cream-50" data-day="Sat">Sat</button>
-                    <button onclick="switchScheduleDay('Sun')" class="day-tab px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition bg-sage-900 text-sage-400 hover:text-cream-50" data-day="Sun">Sun</button>
-                </div>
+                <div class="flex flex-wrap gap-2 border-b border-sage-800 pb-4 mb-8" id="dayTabs"></div>
 
                 <!-- Dynamic Schedule Container -->
                 <div id="scheduleContainer" class="space-y-4">
                     <!-- Javascript populates content here based on active day -->
                 </div>
-                <div class="text-center pt-8"><button onclick="openBookingModal()" class="px-8 py-4 bg-cream-50 hover:bg-cream-100 text-sage-900 font-semibold rounded-full transition text-xs uppercase tracking-wider">Book a Class</button></div>
+                <div class="text-center pt-8"><button onclick="bookGeneral()" class="px-8 py-4 bg-cream-50 hover:bg-cream-100 text-sage-900 font-semibold rounded-full transition text-xs uppercase tracking-wider">Book a Class</button></div>
             </div>
         </section>
 
@@ -888,7 +903,7 @@ function renderSite() {
   $id('prayersIntroText').textContent = SITE.prayersIntro;
   const lines = a => a.map(esc).join('<br>');
   $id('prayersGrid').innerHTML = SITE.prayers.map(p =>
-    '<div class="bg-cream-100/70 p-8 rounded-3xl border border-sage-200/80 shadow-sm space-y-5 text-center"><div><h3 class="font-serif text-2xl sm:text-3xl text-sage-900">' + esc(p.tag) + '</h3><p class="text-[11px] font-semibold tracking-widest text-terracotta uppercase mt-1">' + esc(p.title) + '</p></div><p class="font-serif italic text-base text-sage-800 leading-loose">' + lines(p.roman) + '</p><p class="text-sm text-sage-700 leading-loose" style="font-family:\'Noto Serif Devanagari\',serif">' + lines(p.sanskrit) + '</p><div class="pt-4 border-t border-sage-200"><p class="text-[10px] uppercase tracking-wider text-sage-600 mb-2">Meaning</p><p class="text-sm text-sage-800 font-light leading-relaxed">' + esc(p.meaning) + '</p></div></div>').join('');
+    '<div class="bg-cream-100/70 p-8 rounded-3xl border border-sage-200/80 shadow-sm space-y-5 text-center"><h3 class="font-serif text-2xl sm:text-3xl text-sage-900">' + esc(p.tag) + '</h3><p class="font-sans font-bold text-lg sm:text-xl text-sage-900 leading-relaxed tracking-wide">' + lines(p.roman) + '</p><p class="text-sm text-sage-700 leading-loose" style="font-family:\'Noto Serif Devanagari\',serif">' + lines(p.sanskrit) + '</p><div class="pt-4 border-t border-sage-200"><p class="text-[10px] uppercase tracking-wider text-sage-600 mb-2">Meaning</p><p class="text-sm text-sage-800 font-light leading-relaxed">' + esc(p.meaning) + '</p></div></div>').join('');
   $id('upcomingTitle').textContent = SITE.upcomingTitle;
   $id('upcomingGrid').innerHTML = SITE.upcoming.map(c => '<div class="bg-cream-50 p-5 rounded-3xl border border-sage-200/80 space-y-2 shadow-sm"><div class="p-2 bg-sage-200 rounded-lg text-sage-700 inline-block"><i data-lucide="' + esc(c.icon) + '" class="w-5 h-5"></i></div><h4 class="font-serif text-lg text-sage-900">' + esc(c.title) + '</h4><p class="text-xs text-sage-800 leading-relaxed font-light">' + esc(c.text) + '</p></div>').join('');
   const dot = '<span class="mt-2 w-1.5 h-1.5 rounded-full bg-terracotta shrink-0"></span>';
@@ -944,6 +959,22 @@ function sendMessage(msg, subject) {
   if (L.email) { window.location.href = 'mailto:' + L.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(msg); return true; }
   return false;
 }
+function nextClassDate(day, time) {
+  const idx = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(day), now = new Date(), t = timeVal(time);
+  for (let i = 0; i < 8; i++) { const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i, Math.floor(t / 60), t % 60); if (d.getDay() === idx && d > now) return d; }
+  return null;
+}
+// One tap: opens a ready-written message to Shalini. The student only adds their name and sends.
+function bookSlot(btn) {
+  const d = nextClassDate(btn.dataset.day, btn.dataset.time);
+  const when = d ? d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' }) : btn.dataset.day;
+  const mode = btn.dataset.mode ? ', ' + btn.dataset.mode : '';
+  const msg = 'Hi Shalini, I would like to book ' + btn.dataset.title + ' on ' + when + ' at ' + btn.dataset.time + mode + '. My name is ';
+  if (!sendMessage(msg, 'Class booking')) goContact('General question');
+}
+function bookGeneral() {
+  if (!sendMessage('Hi Shalini, I would like to book a class. My name is ', 'Class booking')) goContact('General question');
+}
 </script>
 
 <!-- JAVASCRIPT LOGIC -->
@@ -984,19 +1015,40 @@ function sendMessage(msg, subject) {
         }
 
         // Timetable Data
-        const scheduleData = {
-            Fri: [
-                { time: '09:00 AM', title: 'Hatha Yoga', duration: '60-70 min', mode: 'In-Person (At Home)' },
-                { time: '05:00 PM', title: 'Hatha Yoga', duration: '60-70 min', mode: 'In-Person (At Home)' }
-            ],
-            Sat: [
-                { time: '07:00 AM', title: 'Hatha Yoga', duration: '60-70 min', mode: 'Online' }
-            ],
-            Sun: [
-                { time: '08:00 AM', title: 'Hatha Yoga', duration: '60-70 min', mode: 'In-Person (At Home)' },
-                { time: '04:30 PM', title: 'Hatha Yoga', duration: '60-70 min', mode: 'In-Person (At Home)' }
-            ]
-        };
+        let scheduleData = {};
+        const DAY_ORDER = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+        function dayKey(d) { const k = String(d || '').trim().slice(0,3).toLowerCase(); return DAY_ORDER.find(x => x.toLowerCase() === k) || ''; }
+        function timeVal(t) { const m = String(t).match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/i); if (!m) return 0; let hr = +m[1]; const ap = (m[3] || '').toLowerCase(); if (ap === 'pm' && hr < 12) hr += 12; if (ap === 'am' && hr === 12) hr = 0; return hr * 60 + (+m[2] || 0); }
+        function buildSchedule(rows) {
+            scheduleData = {};
+            rows.forEach(r => { const k = dayKey(r.day); if (!k || !r.time) return;
+                (scheduleData[k] = scheduleData[k] || []).push({ time: String(r.time).trim(), title: (r.title || '').trim() || 'Hatha Yoga', duration: (r.length || '').trim() || SITE.classLength, mode: (r.mode || '').trim() }); });
+            const days = DAY_ORDER.filter(d => scheduleData[d]);
+            days.forEach(d => scheduleData[d].sort((a, b) => timeVal(a.time) - timeVal(b.time)));
+            document.getElementById('dayTabs').innerHTML = days.map(d => '<button onclick="switchScheduleDay(\'' + d + '\')" data-day="' + d + '" class="day-tab">' + d + '</button>').join('');
+            if (days.length) switchScheduleDay(days[0]);
+            else document.getElementById('scheduleContainer').innerHTML = '<p class="text-center text-sage-400 text-sm">The timetable will be posted here soon.</p>';
+        }
+        function parseCsv(t) {
+            const rows = []; let row = [], cur = '', q = false;
+            for (let i = 0; i < t.length; i++) { const c = t[i];
+                if (q) { if (c === '"' && t[i+1] === '"') { cur += '"'; i++; } else if (c === '"') q = false; else cur += c; }
+                else if (c === '"') q = true;
+                else if (c === ',') { row.push(cur); cur = ''; }
+                else if (c === '\n' || c === '\r') { if (c === '\r' && t[i+1] === '\n') i++; row.push(cur); cur = ''; rows.push(row); row = []; }
+                else cur += c; }
+            if (cur || row.length) { row.push(cur); rows.push(row); }
+            return rows;
+        }
+        async function initSchedule() {
+            buildSchedule(SITE.schedule);
+            if (!SITE.scheduleSheetCsv) return;
+            try {
+                const rows = parseCsv(await (await fetch(SITE.scheduleSheetCsv)).text());
+                const head = rows.shift().map(x => x.trim().toLowerCase()), ix = n => head.indexOf(n);
+                buildSchedule(rows.filter(x => x.some(c => c.trim())).map(x => ({ day: x[ix('day')], time: x[ix('time')], title: x[ix('class')], mode: x[ix('mode')], length: x[ix('length')] })));
+            } catch (e) { /* keep the timetable from the editing box */ }
+        }
 
         function switchScheduleDay(day) {
             const tabs = document.querySelectorAll('.day-tab');
@@ -1015,15 +1067,15 @@ function sendMessage(msg, subject) {
                 <div class="glass-dark p-5 rounded-2xl border border-sage-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div class="flex items-center space-x-4">
                         <div class="px-4 py-2 bg-sage-800 rounded-xl text-terracotta font-semibold text-xs text-center border border-sage-700">
-                            ${item.time}
+                            ${esc(item.time)}
                         </div>
                         <div>
-                            <h4 class="font-serif text-base text-cream-50 font-medium">${item.title}</h4>
-                            <p class="text-xs text-sage-400">${item.duration}${item.mode ? ' &bull; ' + item.mode : ''}</p>
+                            <h4 class="font-serif text-base text-cream-50 font-medium">${esc(item.title)}</h4>
+                            <p class="text-xs text-sage-400">${esc(item.duration)}${item.mode ? ' &bull; ' + esc(item.mode) : ''}</p>
                         </div>
                     </div>
                     <div class="flex items-center justify-end">
-                        <button onclick="quickBook('${item.title}')" class="px-4 py-2 bg-sage-700 hover:bg-sage-600 text-cream-50 text-xs font-semibold uppercase tracking-wider rounded-full transition">
+                        <button data-title="${esc(item.title)}" data-day="${day}" data-time="${esc(item.time)}" data-mode="${esc(item.mode)}" onclick="bookSlot(this)" class="px-4 py-2 bg-sage-700 hover:bg-sage-600 text-cream-50 text-xs font-semibold uppercase tracking-wider rounded-full transition">
                             Book
                         </button>
                     </div>
@@ -1031,8 +1083,7 @@ function sendMessage(msg, subject) {
             `).join('');
         }
 
-        // Show Friday first
-        switchScheduleDay('Fri');
+        initSchedule();
 
         // Modal Logic
         const modal = document.getElementById('bookingModal');
