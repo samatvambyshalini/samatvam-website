@@ -565,7 +565,7 @@ const SITE = {
                         <h2 class="font-serif text-3xl sm:text-4xl text-cream-50 mt-2 font-normal">Weekly Timetable</h2>
                     </div>
                     <p class="text-sage-300 text-xs sm:text-sm max-w-md mt-4 md:mt-0 font-light">
-                        Choose a day to see the timings, then tap Book to reserve your place.
+                        Choose a day to see the timings, then tap Book to log in and join this week&#39;s class poll.
                     </p>
                 </div>
 
@@ -681,11 +681,12 @@ const SITE = {
 <section id="mine" class="hidden py-20 bg-sage-50 border-y border-sage-200/60"><div class="max-w-xl mx-auto px-4 sm:px-6">
 <div class="text-center space-y-4 mb-8"><span class="text-xs font-semibold tracking-widest text-terracotta uppercase bg-cream-100 px-3 py-1 rounded-full">For Students</span>
 <h2 class="font-serif text-3xl sm:text-4xl text-sage-900 font-normal">My Classes</h2>
-<p class="text-sage-700 text-xs sm:text-sm font-light">Enter your email and the 4-digit code Shalini gave you to see how many classes you have attended and how many are left.</p></div>
+<p class="text-sage-700 text-xs sm:text-sm font-light">Enter your email and the 4-digit code Shalini gave you to see your classes and to join the class group for this week&#39;s poll.</p></div>
 <form onsubmit="checkClasses(event)" class="bg-cream-50 p-6 rounded-3xl border border-sage-200/80 space-y-4 shadow-sm">
 <input id="mine-email" type="email" required placeholder="Your email" class="w-full px-4 py-3 rounded-2xl bg-cream-100 border border-sage-200 text-sm">
 <input id="mine-code" type="password" inputmode="numeric" required placeholder="Your 4-digit code" class="w-full px-4 py-3 rounded-2xl bg-cream-100 border border-sage-200 text-sm">
 <button type="submit" class="w-full py-3.5 bg-sage-800 hover:bg-sage-900 text-cream-50 font-semibold uppercase tracking-wide rounded-2xl text-xs transition">Show my classes</button></form>
+<p class="text-center text-xs text-sage-600 mt-4">New here? <a href="#contact" onclick="goContact('First class'); return false;" class="underline">Book your free first class</a></p>
 <div id="mineResult" class="mt-6"></div></div></section>
 
 <!-- 6. CLIENT TESTIMONIALS -->
@@ -948,8 +949,17 @@ async function checkClasses(e) {
     const u = SITE.links.attendanceApi + '?email=' + encodeURIComponent($id('mine-email').value.trim()) + '&code=' + encodeURIComponent($id('mine-code').value.trim());
     const r = await (await fetch(u)).json();
     if (!r.ok) { out.innerHTML = '<div class="' + box + 'text-center text-sm text-sage-800">We could not find that email and code. Please check them, or message Shalini.</div>'; return; }
+    const c = r.current, note = r.pending ? 'Payment pending' : (r.renew ? 'Package complete. Renew to keep going.' : (c ? c.left + ' class' + (c.left === 1 ? '' : 'es') + ' left' : 'No package yet'));
+    let dots = '';
+    if (c) { for (let i = 0; i < c.size; i++) dots += '<span class="w-4 h-4 rounded-full ' + (i < c.used ? 'bg-sage-700' : 'bg-sage-200') + '"></span>'; }
     const stat = (n, l) => '<div class="text-center"><p class="font-serif text-4xl text-sage-900">' + esc(n) + '</p><p class="text-[10px] uppercase tracking-wider text-sage-600 mt-1">' + l + '</p></div>';
-    out.innerHTML = '<div class="' + box + 'space-y-5"><p class="font-serif text-xl text-sage-900">Hello, ' + esc(r.name) + '</p><div class="grid grid-cols-3 gap-4">' + stat(r.attended, 'Attended') + stat(r.left, 'Left') + stat(r.bought, 'Bought') + '</div><p class="text-xs text-sage-700">' + esc(r.plan) + ' &bull; ' + esc(r.status) + ' &bull; valid until ' + esc(r.validUntil) + '</p>' + (r.pay && (r.pay.id || r.pay.qr || r.pay.due) ? '<div class="pt-3 border-t border-sage-100 space-y-2 text-center"><p class="text-[10px] uppercase tracking-wider text-sage-600">Pay with Zelle</p>' + (r.pay.due ? '<p class="text-sm text-sage-900">Amount due: ' + esc(r.pay.due) + '</p>' : '') + (r.pay.id ? '<p class="text-xs text-sage-800">Send to ' + esc(r.pay.id) + '</p>' : '') + (r.pay.qr ? '<img src="' + esc(r.pay.qr) + '" alt="Zelle QR code" class="w-40 h-40 mx-auto rounded-xl border border-sage-200">' : '') + '<p class="text-[11px] text-sage-600">Please message Shalini once you have paid.</p></div>' : '') + (r.recent && r.recent.length ? '<div class="pt-3 border-t border-sage-100"><p class="text-[10px] uppercase tracking-wider text-sage-600 mb-2">Recent classes</p><ul class="text-xs text-sage-800 space-y-1">' + r.recent.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul></div>' : '') + '</div>';
+    let html = '<div class="' + box + 'space-y-5"><p class="font-serif text-xl text-sage-900">Hello, ' + esc(r.name) + '</p>';
+    html += '<div class="grid grid-cols-2 gap-4">' + stat(c ? c.used + ' of ' + c.size : '0', 'This package') + stat(r.attended, 'Classes attended in total') + '</div>';
+    html += (dots ? '<div class="flex justify-center gap-2">' + dots + '</div>' : '') + '<p class="text-center text-sm text-sage-800">' + esc(note) + '</p>';
+    if (r.group) html += '<a href="' + esc(r.group) + '" target="_blank" rel="noopener" class="block text-center py-3.5 bg-sage-800 hover:bg-sage-900 text-cream-50 font-semibold uppercase tracking-wide rounded-2xl text-xs transition">Open the class group and vote in this week&#39;s poll</a>';
+    if (r.pay) html += '<div class="pt-3 border-t border-sage-100 space-y-2 text-center"><p class="text-[10px] uppercase tracking-wider text-sage-600">Pay with Zelle</p><p class="text-sm text-sage-900">Amount due: ' + esc(r.pay.due) + '</p>' + (r.pay.id ? '<p class="text-xs text-sage-800">Send to ' + esc(r.pay.id) + '</p>' : '') + (r.pay.qr ? '<img src="' + esc(r.pay.qr) + '" alt="Zelle QR code" class="w-40 h-40 mx-auto rounded-xl border border-sage-200">' : '') + '<p class="text-[11px] text-sage-600">Please message Shalini once you have paid.</p></div>';
+    if (r.recent && r.recent.length) html += '<div class="pt-3 border-t border-sage-100"><p class="text-[10px] uppercase tracking-wider text-sage-600 mb-2">Recent classes</p><p class="text-xs text-sage-800">' + r.recent.map(esc).join(' &middot; ') + '</p></div>';
+    out.innerHTML = html + '</div>';
   } catch (err) { out.innerHTML = '<div class="' + box + 'text-center text-sm text-sage-800">Something went wrong. Please try again in a moment.</div>'; }
 }
 // Sends a message by the first method you have set up: WhatsApp, then email.
@@ -965,7 +975,9 @@ function nextClassDate(day, time) {
   return null;
 }
 // One tap: opens a ready-written message to Shalini. The student only adds their name and sends.
+function goMine() { const s = document.getElementById('mine'); if (s) s.scrollIntoView({ behavior: 'smooth' }); setTimeout(() => { const e = document.getElementById('mine-email'); if (e) e.focus({ preventScroll: true }); }, 600); }
 function bookSlot(btn) {
+  if (SITE.links.attendanceApi) { goMine(); return; }
   const d = nextClassDate(btn.dataset.day, btn.dataset.time);
   const when = d ? d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' }) : btn.dataset.day;
   const mode = btn.dataset.mode ? ', ' + btn.dataset.mode : '';
@@ -973,6 +985,7 @@ function bookSlot(btn) {
   if (!sendMessage(msg, 'Class booking')) goContact('General question');
 }
 function bookGeneral() {
+  if (SITE.links.attendanceApi) { goMine(); return; }
   if (!sendMessage('Hi Shalini, I would like to book a class. My name is ', 'Class booking')) goContact('General question');
 }
 </script>
