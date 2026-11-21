@@ -237,6 +237,7 @@ const SITE = {
   circle: [
     { icon: "book-open", title: "Book discussions", status: "Coming soon", text: "Reading and talking together about books on yoga and mindful living." },
     { icon: "video",     title: "Zoom discussions", status: "Coming soon", text: "Open, friendly conversation circles you can join from anywhere." },
+    { icon: "play-circle", title: "Practice With Me", status: "Coming soon", text: "Short videos to practice with at home." },
     { icon: "mountain",  title: "A yoga retreat",   status: "A dream for the future", text: "One day, a quiet few days of practice, rest and good company." }
   ],
 
@@ -280,7 +281,7 @@ const SITE = {
                 <a href="#pricing" class="hover:text-terracotta transition">Pricing</a>
 <a id="navMine" href="#mine" class="hidden hover:text-terracotta transition">My Classes</a>
                 <a href="#testimonials" class="hover:text-terracotta transition">Stories</a>
-<a href="#videos" class="hover:text-terracotta transition">Videos</a>
+
 <a href="#circle" class="hover:text-terracotta transition">Circle</a>
                 <a href="#contact" class="hover:text-terracotta transition">Contact</a>
             </nav>
@@ -308,7 +309,7 @@ const SITE = {
             <a href="#pricing" class="block py-2 text-sm text-sage-900 font-medium" onclick="toggleMobileMenu()">Pricing & Membership</a>
 <a id="navMineM" href="#mine" class="hidden py-2 text-sm text-sage-900 font-medium" onclick="toggleMobileMenu()">My Classes</a>
             <a href="#testimonials" class="block py-2 text-sm text-sage-900 font-medium" onclick="toggleMobileMenu()">Client Stories</a>
-<a href="#videos" class="block py-2 text-sm text-sage-900 font-medium" onclick="toggleMobileMenu()">Practice Videos</a>
+
 <a href="#circle" class="block py-2 text-sm text-sage-900 font-medium" onclick="toggleMobileMenu()">Samatvam Circle</a>
             <a href="#contact" class="block py-2 text-sm text-sage-900 font-medium" onclick="toggleMobileMenu()">Contact</a>
             <button onclick="openFirstClass(); toggleMobileMenu();" class="w-full text-center px-5 py-3 bg-sage-800 text-cream-50 font-medium text-xs uppercase tracking-wider rounded-full transition">
@@ -607,7 +608,7 @@ const SITE = {
                             </li>
                             <li class="flex items-center space-x-3">
                                 <i data-lucide="check" class="w-4 h-4 text-sage-600"></i>
-                                <span>Use within 2 months</span>
+                                <span>Use within 90 days</span>
                             </li>
                             <li class="flex items-center space-x-3">
                                 <i data-lucide="check" class="w-4 h-4 text-sage-600"></i>
@@ -635,10 +636,6 @@ const SITE = {
                                 <i data-lucide="check" class="w-4 h-4 text-sage-300"></i>
                                 <span>Up to any 5 classes each month</span>
                             </li>
-<li class="flex items-center space-x-3">
-                                <i data-lucide="check" class="w-4 h-4 text-sage-300"></i>
-                                <span>Classes at Shalini&#39;s home; address shared when you register</span>
-                            </li>
                             <li class="flex items-center space-x-3">
                                 <i data-lucide="check" class="w-4 h-4 text-sage-300"></i>
                                 <span>Online or in-person</span>
@@ -663,7 +660,11 @@ const SITE = {
                         <ul class="space-y-3 text-xs text-sage-700 pt-4 border-t border-sage-200">
                             <li class="flex items-center space-x-3">
                                 <i data-lucide="check" class="w-4 h-4 text-sage-600"></i>
-                                <span>Per class, pay as you go</span>
+                                <span>Pay for 8 classes at a time (&#8377;4,000)</span>
+                            </li>
+<li class="flex items-center space-x-3">
+                                <i data-lucide="check" class="w-4 h-4 text-sage-600"></i>
+                                <span>Use within 4 months</span>
                             </li>
                             <li class="flex items-center space-x-3">
                                 <i data-lucide="check" class="w-4 h-4 text-sage-600"></i>
@@ -701,24 +702,29 @@ const SITE = {
 
                 <div id="reviewGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
 <div class="text-center mt-10" id="reviewCta"></div>
+<div id="reviewFormWrap" class="hidden max-w-xl mx-auto mt-14">
+<form onsubmit="submitReview(event)" class="relative bg-cream-50 p-6 rounded-3xl border border-sage-200/80 shadow-sm space-y-4">
+<h3 class="font-serif text-xl text-sage-900 text-center">Share your experience</h3>
+<input id="rv-name" type="text" required maxlength="60" placeholder="Your name" class="w-full px-4 py-3 rounded-2xl bg-cream-100 border border-sage-200 text-sm">
+<textarea id="rv-story" required minlength="10" maxlength="1200" rows="4" placeholder="What has your practice meant to you? A few lines is perfect." class="w-full px-4 py-3 rounded-2xl bg-cream-100 border border-sage-200 text-sm"></textarea>
+<input id="rv-site" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+<label class="flex items-start gap-3 text-xs text-sage-800"><input id="rv-consent" type="checkbox" required class="mt-0.5"><span>I am happy for my words to be shared on this website after Shalini has read them.</span></label>
+<button type="submit" class="w-full py-3.5 bg-sage-800 hover:bg-sage-900 text-cream-50 font-semibold uppercase tracking-wide rounded-2xl text-xs transition">Submit</button>
+<p id="rv-msg" class="text-center text-sm text-sage-700"></p>
+</form></div>
 </div>
 </section>
 
-        <!-- VIDEOS -->
-<section id="videos" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="text-center max-w-3xl mx-auto space-y-4 mb-12">
-<span class="text-xs font-semibold tracking-widest text-terracotta uppercase bg-cream-100 px-3 py-1 rounded-full">Practice Videos</span>
-<h2 class="font-serif text-3xl sm:text-4xl text-sage-900 font-normal">Practice With Me</h2>
-<p id="videosIntroText" class="text-sage-700 text-xs sm:text-sm font-light"></p></div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto" id="videosGrid"></div></section>
-
-<!-- CIRCLE -->
+        <!-- CIRCLE -->
 <section id="circle" class="py-20 bg-sage-50 border-y border-sage-200/60"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="text-center max-w-3xl mx-auto space-y-4 mb-12">
 <span class="text-xs font-semibold tracking-widest text-terracotta uppercase bg-cream-100 px-3 py-1 rounded-full">Samatvam Circle</span>
 <h2 class="font-serif text-3xl sm:text-4xl text-sage-900 font-normal">More Than Classes</h2>
 <p id="circleIntroText" class="text-sage-700 text-xs sm:text-sm font-light"></p></div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="circleGrid"></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="circleGrid"></div>
+<div id="videosWrap" class="hidden mt-14">
+<div class="text-center space-y-2 mb-8"><h3 class="font-serif text-2xl text-sage-900">Practice With Me</h3><p id="videosIntroText" class="text-sage-700 text-xs sm:text-sm font-light"></p></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto" id="videosGrid"></div></div>
 <div class="text-center mt-10"><a href="#contact" class="px-8 py-4 bg-cream-100 hover:bg-sage-100 text-sage-800 font-medium rounded-full border border-sage-200 transition text-xs uppercase tracking-wider">Tell me you are interested</a></div>
 </div></section>
 
@@ -820,7 +826,7 @@ const SITE = {
                     <a href="#classes" class="hover:text-cream-50 transition">Classes</a>
                     <a href="#schedule" class="hover:text-cream-50 transition">Schedule</a>
                     <a href="#pricing" class="hover:text-cream-50 transition">Pricing</a>
-<a href="#videos" class="hover:text-cream-50 transition">Videos</a>
+
 <a href="#circle" class="hover:text-cream-50 transition">Circle</a>
                     <a href="#contact" class="hover:text-cream-50 transition">Contact</a>
                 </div>
@@ -916,10 +922,7 @@ function renderSite() {
   $id('guidelinesTag').textContent = G.tag; $id('guidelinesTitle').textContent = G.title; $id('guidelinesIntro').textContent = G.intro;
   $id('guidelinesBody').innerHTML = '<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"><div class="bg-cream-100/70 p-8 rounded-3xl border border-sage-200/80 shadow-sm"><h3 class="font-serif text-xl text-sage-900 mb-4">' + esc(G.inPerson.title) + '</h3><ul class="space-y-3 text-sm text-sage-800 font-light leading-relaxed">' + G.inPerson.items.map(i => '<li class="flex items-start gap-3">' + dot + '<span><strong class="font-semibold text-sage-900">' + esc(i.label) + ':</strong> ' + esc(i.text) + '</span></li>').join('') + '</ul></div><div class="bg-cream-100/70 p-8 rounded-3xl border border-sage-200/80 shadow-sm"><h3 class="font-serif text-xl text-sage-900 mb-4">' + esc(G.online.title) + '</h3><ul class="space-y-3 text-sm text-sage-800 font-light leading-relaxed">' + G.online.items.map(t => '<li class="flex items-start gap-3">' + dot + '<span>' + esc(t) + '</span></li>').join('') + '</ul></div></div><p class="text-center text-sage-700 text-sm font-light mt-8">' + esc(G.thanks) + '</p>';
   $id('reviewsIntroText').textContent = SITE.reviewsIntro;
-  const stars = '<div class="flex text-amber-500 space-x-1">' + '<i data-lucide="star" class="w-4 h-4 fill-current"></i>'.repeat(5) + '</div>';
-  $id('reviewGrid').innerHTML = SITE.reviews.length ? SITE.reviews.map(r =>
-    '<div class="bg-cream-50 p-6 rounded-3xl border border-sage-200/80 space-y-4 shadow-sm">' + stars + '<p class="text-xs text-sage-800 leading-relaxed italic">&ldquo;' + esc(r.text) + '&rdquo;</p><div class="pt-2 border-t border-sage-100"><h4 class="text-xs font-semibold text-sage-900">' + esc(r.name) + '</h4></div></div>').join('')
-    : '<p class="md:col-span-3 text-center text-sage-600 text-sm font-light">Student stories will be shared here soon.</p>';
+  renderReviews(SITE.reviews);
   $id('reviewCta').innerHTML = L.reviewForm ? '<a href="' + esc(L.reviewForm) + '" target="_blank" rel="noopener" class="px-8 py-4 bg-cream-50 hover:bg-sage-100 text-sage-800 rounded-full border border-sage-200 transition text-xs uppercase tracking-wider">Share your experience</a>' : '';
   $id('videosIntroText').textContent = SITE.videosIntro;
   const embedUrl = u => { u = String(u).trim(); let m;
@@ -929,12 +932,13 @@ function renderSite() {
   $id('videosGrid').innerHTML = SITE.videos.length ? SITE.videos.map(v => {
     const e = embedUrl(v.url);
     return '<div class="bg-cream-50 p-4 rounded-3xl border border-sage-200/80 shadow-sm space-y-3">' + (e ? '<div class="aspect-video rounded-2xl overflow-hidden bg-sage-100"><iframe src="' + esc(e) + '" title="' + esc(v.title) + '" class="w-full h-full" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>' : '<a href="' + esc(v.url) + '" target="_blank" rel="noopener" class="aspect-video rounded-2xl bg-sage-100 flex items-center justify-center text-sage-800 text-sm">Watch video</a>') + '<h3 class="font-serif text-lg text-sage-900 px-2 pb-1">' + esc(v.title) + '</h3></div>'; }).join('')
-    : '<p class="md:col-span-2 text-center text-sage-600 text-sm font-light">Videos will be shared here soon.</p>';
+    : '';
+  if (SITE.videos.length) $id('videosWrap').classList.remove('hidden');
   $id('circleIntroText').textContent = SITE.circleIntro;
   $id('circleGrid').innerHTML = SITE.circle.map(c =>
     '<div class="bg-cream-50 p-6 rounded-3xl border border-sage-200/80 space-y-3 shadow-sm"><div class="flex items-center justify-between"><div class="p-2 bg-sage-200 rounded-lg text-sage-700"><i data-lucide="' + esc(c.icon) + '" class="w-5 h-5"></i></div><span class="text-[10px] font-semibold tracking-wider text-terracotta uppercase">' + esc(c.status) + '</span></div><h3 class="font-serif text-lg text-sage-900">' + esc(c.title) + '</h3><p class="text-xs text-sage-800 leading-relaxed font-light">' + esc(c.text) + '</p></div>').join('');
   $id('contactIntroText').textContent = SITE.contactIntro;
-  if (L.attendanceApi) { ['mine','navMine','navMineM'].forEach(i => $id(i).classList.remove('hidden')); $id('navMineM').classList.add('block'); }
+  if (L.attendanceApi) { ['mine','navMine','navMineM','reviewFormWrap'].forEach(i => $id(i).classList.remove('hidden')); $id('navMineM').classList.add('block'); }
   $id('contactEmailText').textContent = L.email || 'Use the message form';
   $id('contactPhoneText').textContent = L.phone || (L.whatsapp ? 'Message me on WhatsApp' : 'Use the message form');
   const extra = [['Instagram', L.instagram, 'instagram'], ['Google Business Profile', L.googleBusiness, 'map-pin'], ['Website', L.website, 'globe']].filter(x => x[1]);
@@ -963,7 +967,24 @@ async function checkClasses(e) {
     out.innerHTML = html + '</div>';
   } catch (err) { out.innerHTML = '<div class="' + box + 'text-center text-sm text-sage-800">Something went wrong. Please try again in a moment.</div>'; }
 }
+async function submitReview(e) {
+  e.preventDefault();
+  if ($id('rv-site').value) return;
+  const msg = $id('rv-msg'); msg.textContent = 'Sending...';
+  try {
+    const u = SITE.links.attendanceApi + '?action=review&name=' + encodeURIComponent($id('rv-name').value.trim()) + '&story=' + encodeURIComponent($id('rv-story').value.trim()) + '&consent=yes';
+    const r = await (await fetch(u)).json();
+    if (r.ok) { msg.textContent = 'Thank you. Your words will appear once Shalini has read them.'; $id('rv-name').value = ''; $id('rv-story').value = ''; $id('rv-consent').checked = false; }
+    else msg.textContent = 'Sorry, that did not go through. Please check what you wrote and try again.';
+  } catch (err) { msg.textContent = 'Something went wrong. Please try again in a moment.'; }
+}
 // Sends a message by the first method you have set up: WhatsApp, then email.
+function renderReviews(list) {
+  $id('reviewGrid').innerHTML = list.length ? list.map(r => {
+    const nm = String(r.name || 'A student').trim() || 'A student';
+    return '<div><div class="relative bg-cream-50 p-6 pt-4 rounded-3xl border border-sage-200/80 shadow-sm"><span class="font-serif text-5xl leading-none text-terracotta block h-8">&ldquo;</span><p class="text-sm text-sage-800 leading-relaxed italic">' + esc(r.text) + '</p><span class="absolute -bottom-2 left-10 w-4 h-4 bg-cream-50 border-b border-r border-sage-200/80 rotate-45"></span></div><div class="flex items-center gap-3 mt-5 pl-6"><div class="w-8 h-8 rounded-full bg-sage-200 text-sage-800 flex items-center justify-center font-serif text-sm">' + esc(nm.charAt(0).toUpperCase()) + '</div><span class="text-xs font-semibold text-sage-900">' + esc(nm) + '</span></div></div>';
+  }).join('') : '<p class="md:col-span-3 text-center text-sage-600 text-sm font-light">Student stories will be shared here soon.</p>';
+}
 function sendMessage(msg, subject) {
   const L = SITE.links;
   if (L.whatsapp) { window.open(L.whatsapp + (L.whatsapp.includes('?') ? '&' : '?') + 'text=' + encodeURIComponent(msg), '_blank'); return true; }
@@ -1098,6 +1119,15 @@ function bookGeneral() {
         }
 
         initSchedule();
+
+        async function initReviews() {
+            if (!SITE.links.attendanceApi) return;
+            try {
+                const r = await (await fetch(SITE.links.attendanceApi + '?action=reviews')).json();
+                if (r.ok && r.reviews && r.reviews.length) renderReviews(SITE.reviews.concat(r.reviews));
+            } catch (e) { /* keep the reviews from the editing box */ }
+        }
+        initReviews();
 
         // Modal Logic
         const modal = document.getElementById('bookingModal');
